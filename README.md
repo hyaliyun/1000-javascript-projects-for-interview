@@ -8,15 +8,15 @@ The following is a list of 25 JavaScript projects we have prepared for you. Each
 
 ### 1. Accordion Effect (Accordion)
 - **Purpose**: Implement a collapsible accordion effect, which is often used in FAQ pages or scenarios where you need to save space to display content.
-- **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/1.accordion/index.html), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/1.accordion/main.js), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/1.accordion/style.css)
+- **Files**: [index.html]([https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/1.accordion/index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
 ### 2. Random Color Generator
 - **Purpose**: Generate and display random colors, which can be used in design tools or any scene that requires random colors.
-- **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/2.random-color-generator/index.html), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/2.random-color-generator/main.js), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/2.random-color-generator/style.css)
+- **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
 ### 3. Star Rating System
 - **Purpose**: Implement a star rating system where users can give ratings by clicking on the stars.
-- **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/3.star-rating/index.html), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/3.star-rating/main.js), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/3.star-rating/style.css)
+- **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024, [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
 ... (Detailed description of other projects is omitted here, the following is a list of projects)
 
