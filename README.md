@@ -1,10 +1,12 @@
 # 25 JavaScript Projects: Prepare for Your 2024 Interview
 ![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Countdown%20timer.png)
-In the competitive field of programming, having solid JavaScript skills is a key step towards success. To help you better prepare for the upcoming interview, we have carefully prepared 25 practical JavaScript project examples. These projects not only cover common needs in front-end development, but also help you deeply understand the core concepts of JavaScript and improve your practical ability.
+### In the competitive field of programming,
+having solid JavaScript skills is a key step towards success. To help you better prepare for the upcoming interview, we have carefully prepared 25 practical JavaScript project examples. These projects not only cover common needs in front-end development, but also help you deeply understand the core concepts of JavaScript and improve your practical ability.
 
 ## Project Overview
 ![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/To-do%20List.png)
-The following is a list of 25 JavaScript projects we have prepared for you. Each project comes with HTML, CSS, and JavaScript files for you to download, learn, and modify.
+### The following is a list of 25 JavaScript projects
+we have prepared for you. Each project comes with HTML, CSS, and JavaScript files for you to download, learn, and modify.
 
 ### 1. Accordion Effect (Accordion)
 ![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/notes-app.png)
