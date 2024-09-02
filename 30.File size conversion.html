@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件大小转换器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        input, select, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        input {
+            width: 200px;
+        }
+        select, button {
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        select:hover, button:hover {
+            background-color: #27ae60;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="color: white;">文件大小转换器</h2>
+        <input type="number" id="fileSize" placeholder="输入文件大小">
+        <select id="fromUnit">
+            <option value="B">字节 (B)</option>
+            <option value="KB">千字节 (KB)</option>
+            <option value="MB">兆字节 (MB)</option>
+            <option value="GB">吉字节 (GB)</option>
+            <option value="TB">太字节 (TB)</option>
+        </select>
+        <select id="toUnit">
+            <option value="B">字节 (B)</option>
+            <option value="KB">千字节 (KB)</option>
+            <option value="MB">兆字节 (MB)</option>
+            <option value="GB">吉字节 (GB)</option>
+            <option value="TB">太字节 (TB)</option>
+        </select>
+        <button onclick="convertSize()">转换</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertSize() {
+            const fileSize = parseFloat(document.getElementById('fileSize').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            
+            if (isNaN(fileSize)) {
+                alert('请输入有效的文件大小');
+                return;
+            }
+
+            const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const fromIndex = units.indexOf(fromUnit);
+            const toIndex = units.indexOf(toUnit);
+            const difference = fromIndex - toIndex;
+
+            let result = fileSize * Math.pow(1024, difference);
+            
+            result = formatFileSize(result, toUnit);
+            
+            document.getElementById('result').innerText = `${fileSize} ${fromUnit} = ${result} ${toUnit}`;
+        }
+
+        function formatFileSize(bytes, unit) {
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            if (bytes === 0) return '0 ' + unit;
+            const i = sizes.indexOf(unit);
+            return parseFloat((bytes / Math.pow(1024, i)).toFixed(2));
+        }
+    </script>
+</body>
+</html>

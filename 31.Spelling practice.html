@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词拼写练习</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        h1 {
+            color: white;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        #result, #hint {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+        }
+        #progress {
+            margin-top: 20px;
+            font-size: 16px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>单词拼写练习</h1>
+        <div id="hint"></div>
+        <input type="text" id="userInput" placeholder="输入单词">
+        <button onclick="checkSpelling()">检查</button>
+        <button onclick="getHint()">提示</button>
+        <button onclick="nextWord()">下一个</button>
+        <div id="result"></div>
+        <div id="progress"></div>
+    </div>
+
+    <script>
+        const words = [
+            {word: "apple", hint: "一种常见的水果,通常是红色或绿色的"},
+            {word: "banana", hint: "一种黄色的长形水果"},
+            {word: "computer", hint: "用于处理数据和执行计算的电子设备"},
+            {word: "elephant", hint: "一种大型哺乳动物,有长鼻子"},
+            {word: "guitar", hint: "一种有六根弦的乐器"}
+        ];
+
+        let currentWordIndex = 0;
+        let correctCount = 0;
+
+        function getRandomWord() {
+            return words[Math.floor(Math.random() * words.length)];
+        }
+
+        function nextWord() {
+            currentWordIndex++;
+            if (currentWordIndex >= words.length) {
+                endGame();
+            } else {
+                document.getElementById('userInput').value = '';
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('hint').innerHTML = '';
+                updateProgress();
+            }
+        }
+
+        function checkSpelling() {
+            const userInput = document.getElementById('userInput').value.toLowerCase();
+            const currentWord = words[currentWordIndex].word;
+            const resultElement = document.getElementById('result');
+
+            if (userInput === currentWord) {
+                resultElement.innerHTML = "正确!";
+                correctCount++;
+            } else {
+                resultElement.innerHTML = "错误,正确拼写是: " + currentWord;
+            }
+
+            updateProgress();
+        }
+
+        function getHint() {
+            const hintElement = document.getElementById('hint');
+            hintElement.innerHTML = "提示: " + words[currentWordIndex].hint;
+        }
+
+        function updateProgress() {
+            const progressElement = document.getElementById('progress');
+            progressElement.innerHTML = `进度: ${currentWordIndex + 1}/${words.length}, 正确: ${correctCount}`;
+        }
+
+        function endGame() {
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <h1>练习结束!</h1>
+                <p>你的得分: ${correctCount}/${words.length}</p>
+                <button onclick="location.reload()">再来一次</button>
+            `;
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>

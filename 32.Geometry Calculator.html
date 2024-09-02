@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>几何图形计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        h1 {
+            color: white;
+        }
+        select, input, button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>几何图形计算器</h1>
+        <select id="shape">
+            <option value="square">正方形</option>
+            <option value="rectangle">长方形</option>
+            <option value="circle">圆形</option>
+            <option value="triangle">三角形</option>
+        </select>
+        <div id="inputs"></div>
+        <button onclick="calculate()">计算</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const shapes = {
+            square: {
+                inputs: [{ name: 'side', label: '边长' }],
+                area: (side) => side * side,
+                perimeter: (side) => 4 * side
+            },
+            rectangle: {
+                inputs: [
+                    { name: 'length', label: '长' },
+                    { name: 'width', label: '宽' }
+                ],
+                area: (length, width) => length * width,
+                perimeter: (length, width) => 2 * (length + width)
+            },
+            circle: {
+                inputs: [{ name: 'radius', label: '半径' }],
+                area: (radius) => Math.PI * radius * radius,
+                perimeter: (radius) => 2 * Math.PI * radius
+            },
+            triangle: {
+                inputs: [
+                    { name: 'base', label: '底' },
+                    { name: 'height', label: '高' }
+                ],
+                area: (base, height) => 0.5 * base * height,
+                perimeter: (base, height) => {
+                    const side = Math.sqrt(base*base/4 + height*height);
+                    return base + 2 * side;
+                }
+            }
+        };
+
+        function updateInputs() {
+            const shape = document.getElementById('shape').value;
+            const inputsDiv = document.getElementById('inputs');
+            inputsDiv.innerHTML = '';
+            shapes[shape].inputs.forEach(input => {
+                inputsDiv.innerHTML += `
+                    <input type="number" id="${input.name}" placeholder="${input.label}">
+                `;
+            });
+        }
+
+        function calculate() {
+            const shape = document.getElementById('shape').value;
+            const inputs = shapes[shape].inputs.map(input => 
+                parseFloat(document.getElementById(input.name).value)
+            );
+            const area = shapes[shape].area(...inputs);
+            const perimeter = shapes[shape].perimeter(...inputs);
+            document.getElementById('result').innerHTML = `
+                面积: ${area.toFixed(2)}<br>
+                周长: ${perimeter.toFixed(2)}
+            `;
+        }
+
+        document.getElementById('shape').addEventListener('change', updateInputs);
+        updateInputs();
+    </script>
+</body>
+</html>

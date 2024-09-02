@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown编辑器</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.3/purify.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        #editor, #preview {
+            flex: 1;
+            padding: 20px;
+            height: 500px;
+            overflow-y: auto;
+        }
+        #editor {
+            border: none;
+            resize: none;
+            outline: none;
+            font-family: monospace;
+        }
+        #preview {
+            border-left: 1px solid #ccc;
+        }
+        .toolbar {
+            background-color: #f8f8f8;
+            padding: 10px;
+            text-align: center;
+        }
+        button {
+            margin: 5px;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="insertMarkdown('**', '**')">粗体</button>
+        <button onclick="insertMarkdown('*', '*')">斜体</button>
+        <button onclick="insertMarkdown('# ')">标题</button>
+        <button onclick="insertMarkdown('- ')">无序列表</button>
+        <button onclick="insertMarkdown('1. ')">有序列表</button>
+        <button onclick="insertMarkdown('[', '](url)')">链接</button>
+        <button onclick="insertMarkdown('![alt text](', ')')">图片</button>
+        <button onclick="insertMarkdown('```\n', '\n```')">代码块</button>
+        <button onclick="exportHTML()">导出HTML</button>
+    </div>
+    <div class="container">
+        <textarea id="editor" oninput="updatePreview()"></textarea>
+        <div id="preview"></div>
+    </div>
+
+    <script>
+        function updatePreview() {
+            const editorContent = document.getElementById('editor').value;
+            const htmlContent = marked.parse(editorContent);
+            document.getElementById('preview').innerHTML = DOMPurify.sanitize(htmlContent);
+        }
+
+        function insertMarkdown(before, after = '') {
+            const editor = document.getElementById('editor');
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+            const selectedText = editor.value.substring(start, end);
+            const replacement = before + selectedText + after;
+            editor.value = editor.value.substring(0, start) + replacement + editor.value.substring(end);
+            editor.focus();
+            editor.setSelectionRange(start + before.length, end + before.length);
+            updatePreview();
+        }
+
+        function exportHTML() {
+            const editorContent = document.getElementById('editor').value;
+            const htmlContent = marked.parse(editorContent);
+            const sanitizedHTML = DOMPurify.sanitize(htmlContent);
+            const blob = new Blob([sanitizedHTML], {type: 'text/html'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exported.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 初始化预览
+        updatePreview();
+    </script>
+</body>
+</html>
