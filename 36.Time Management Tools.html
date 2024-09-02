@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件压缩与解压工具</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        h1 {
+            color: white;
+        }
+        input[type="file"], button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #27ae60;
+        }
+        #status {
+            margin-top: 20px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>文件压缩与解压工具</h1>
+        <input type="file" id="fileInput" multiple>
+        <button onclick="compressFiles()">压缩文件</button>
+        <button onclick="decompressFile()">解压文件</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function compressFiles() {
+            const files = document.getElementById('fileInput').files;
+            if (files.length === 0) {
+                updateStatus('请选择要压缩的文件');
+                return;
+            }
+
+            const zip = new JSZip();
+            for (let file of files) {
+                zip.file(file.name, await file.arrayBuffer());
+            }
+
+            updateStatus('正在压缩文件...');
+            const content = await zip.generateAsync({type: 'blob'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(content);
+            link.download = 'compressed.zip';
+            link.click();
+            updateStatus('压缩完成，文件已下载');
+        }
+
+        async function decompressFile() {
+            const file = document.getElementById('fileInput').files[0];
+            if (!file) {
+                updateStatus('请选择要解压的ZIP文件');
+                return;
+            }
+
+            updateStatus('正在解压文件...');
+            const zip = new JSZip();
+            const content = await zip.loadAsync(file);
+            
+            for (let filename in content.files) {
+                if (!content.files[filename].dir) {
+                    const blob = await content.file(filename).async('blob');
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    link.click();
+                }
+            }
+            updateStatus('解压完成，文件已下载');
+        }
+
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+    </script>
+</body>
+</html>
