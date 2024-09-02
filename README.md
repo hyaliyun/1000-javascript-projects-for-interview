@@ -26,6 +26,7 @@ The following is a list of 25 JavaScript projects we have prepared for you. Each
 ### 7. Light and dark mode switch
 ### 8. Random Quote Generator
 ### 9. Tab Switcher
+![Coverage Status]([https://coveralls.io/repos/github/duxianwei520/react/badge.svg](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Accordion%20with%20Modal.png))
 ### 10. Modal
 ### 11. Tic-Tac-Toe
 ### 12. Filter Cards
