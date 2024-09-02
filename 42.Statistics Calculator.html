@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>统计计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #results {
+            margin-top: 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>统计计算器</h1>
+        <textarea id="dataInput" placeholder="请输入数据，用逗号分隔"></textarea>
+        <div>
+            <button onclick="calculate('mean')">平均数</button>
+            <button onclick="calculate('median')">中位数</button>
+            <button onclick="calculate('mode')">众数</button>
+            <button onclick="calculate('stdDev')">标准差</button>
+            <button onclick="calculate('variance')">方差</button>
+            <button onclick="calculate('range')">范围</button>
+            <button onclick="calculate('all')">全部计算</button>
+        </div>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function calculate(type) {
+            const input = document.getElementById('dataInput').value;
+            const data = input.split(',').map(Number).filter(n => !isNaN(n));
+            
+            if (data.length === 0) {
+                alert('请输入有效的数据');
+                return;
+            }
+
+            let result = '';
+
+            switch(type) {
+                case 'mean':
+                    result = `平均数: ${mean(data)}`;
+                    break;
+                case 'median':
+                    result = `中位数: ${median(data)}`;
+                    break;
+                case 'mode':
+                    result = `众数: ${mode(data)}`;
+                    break;
+                case 'stdDev':
+                    result = `标准差: ${standardDeviation(data)}`;
+                    break;
+                case 'variance':
+                    result = `方差: ${variance(data)}`;
+                    break;
+                case 'range':
+                    result = `范围: ${range(data)}`;
+                    break;
+                case 'all':
+                    result = `平均数: ${mean(data)}<br>
+                              中位数: ${median(data)}<br>
+                              众数: ${mode(data)}<br>
+                              标准差: ${standardDeviation(data)}<br>
+                              方差: ${variance(data)}<br>
+                              范围: ${range(data)}`;
+                    break;
+            }
+
+            document.getElementById('results').innerHTML = result;
+        }
+
+        function mean(numbers) {
+            return numbers.reduce((sum, num) => sum + num, 0) / numbers.length;
+        }
+
+        function median(numbers) {
+            const sorted = numbers.slice().sort((a, b) => a - b);
+            const middle = Math.floor(sorted.length / 2);
+            if (sorted.length % 2 === 0) {
+                return (sorted[middle - 1] + sorted[middle]) / 2;
+            }
+            return sorted[middle];
+        }
+
+        function mode(numbers) {
+            const counts = {};
+            let maxCount = 0;
+            let modes = [];
+
+            numbers.forEach(num => {
+                counts[num] = (counts[num] || 0) + 1;
+                if (counts[num] > maxCount) {
+                    maxCount = counts[num];
+                    modes = [num];
+                } else if (counts[num] === maxCount) {
+                    modes.push(num);
+                }
+            });
+
+            return modes.join(', ');
+        }
+
+        function variance(numbers) {
+            const avg = mean(numbers);
+            return numbers.reduce((sum, num) => sum + Math.pow(num - avg, 2), 0) / numbers.length;
+        }
+
+        function standardDeviation(numbers) {
+            return Math.sqrt(variance(numbers));
+        }
+
+        function range(numbers) {
+            return Math.max(...numbers) - Math.min(...numbers);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据分析报告生成器</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstat/1.9.5/jstat.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #report {
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>数据分析报告生成器</h1>
+        <textarea id="dataInput" placeholder="请输入数据，每行一个数值"></textarea>
+        <button onclick="generateReport()">生成报告</button>
+        <div id="report"></div>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <script>
+        function generateReport() {
+            const input = document.getElementById('dataInput').value;
+            const data = input.split('\n').map(Number).filter(n => !isNaN(n));
+            
+            if (data.length === 0) {
+                alert('请输入有效的数据');
+                return;
+            }
+
+            const report = document.getElementById('report');
+            report.innerHTML = '';
+
+            // 基本统计
+            const mean = jstat.mean(data);
+            const median = jstat.median(data);
+            const mode = jstat.mode(data);
+            const variance = jstat.variance(data);
+            const stdDev = jstat.stdev(data);
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+
+            report.innerHTML += `
+                <h2>基本统计</h2>
+                <p>平均值: ${mean.toFixed(2)}</p>
+                <p>中位数: ${median.toFixed(2)}</p>
+                <p>众数: ${mode.join(', ')}</p>
+                <p>方差: ${variance.toFixed(2)}</p>
+                <p>标准差: ${stdDev.toFixed(2)}</p>
+                <p>最小值: ${min}</p>
+                <p>最大值: ${max}</p>
+            `;
+
+            // 分布分析
+            const histogram = jstat.histogram(data, 10);
+            const chartCtx = document.getElementById('chart').getContext('2d');
+            new Chart(chartCtx, {
+                type: 'bar',
+                data: {
+                    labels: histogram.map((_, i) => `Bin ${i + 1}`),
+                    datasets: [{
+                        label: '频率',
+                        data: histogram,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // 相关性分析（如果数据量足够）
+            if (data.length > 1) {
+                const correlation = jstat.corrcoeff(data.slice(0, -1), data.slice(1));
+                report.innerHTML += `
+                    <h2>相关性分析</h2>
+                    <p>相邻数据点的相关系数: ${correlation.toFixed(4)}</p>
+                `;
+            }
+
+            // 异常值检测
+            const q1 = jstat.quartiles(data)[0];
+            const q3 = jstat.quartiles(data)[2];
+            const iqr = q3 - q1;
+            const lowerBound = q1 - 1.5 * iqr;
+            const upperBound = q3 + 1.5 * iqr;
+            const outliers = data.filter(x => x < lowerBound || x > upperBound);
+
+            report.innerHTML += `
+                <h2>异常值检测</h2>
+                <p>检测到的异常值: ${outliers.join(', ') || '无'}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

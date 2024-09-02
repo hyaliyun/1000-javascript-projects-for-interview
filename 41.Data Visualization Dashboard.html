@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI 数据可视化仪表板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .widget {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .widget:hover {
+            transform: translateY(-5px);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .kpi {
+            font-size: 2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #4a90e2;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        button {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <h1>KPI 数据可视化仪表板</h1>
+    <div class="dashboard">
+        <div class="widget">
+            <h2>销售额</h2>
+            <div id="salesKPI" class="kpi"></div>
+            <canvas id="salesChart"></canvas>
+        </div>
+        <div class="widget">
+            <h2>客户满意度</h2>
+            <div id="satisfactionKPI" class="kpi"></div>
+            <canvas id="satisfactionChart"></canvas>
+        </div>
+        <div class="widget">
+            <h2>网站访问量</h2>
+            <div id="trafficKPI" class="kpi"></div>
+            <canvas id="trafficChart"></canvas>
+        </div>
+        <div class="widget">
+            <h2>转化率</h2>
+            <div id="conversionKPI" class="kpi"></div>
+            <canvas id="conversionChart"></canvas>
+        </div>
+    </div>
+    <button onclick="refreshData()">刷新数据</button>
+
+    <script>
+        // 模拟数据
+        function generateData(count, min, max) {
+            return Array.from({length: count}, () => Math.floor(Math.random() * (max - min + 1) + min));
+        }
+
+        // 创建图表
+        function createChart(ctx, label, data) {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                    datasets: [{
+                        label: label,
+                        data: data,
+                        borderColor: '#4a90e2',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // 更新KPI和图表
+        function updateKPIAndChart(kpiId, chartId, label, min, max) {
+            const data = generateData(6, min, max);
+            document.getElementById(kpiId).textContent = data[data.length - 1];
+            const ctx = document.getElementById(chartId).getContext('2d');
+            if (window[chartId]) {
+                window[chartId].destroy();
+            }
+            window[chartId] = createChart(ctx, label, data);
+        }
+
+        // 刷新所有数据
+        function refreshData() {
+            updateKPIAndChart('salesKPI', 'salesChart', '销售额', 1000, 5000);
+            updateKPIAndChart('satisfactionKPI', 'satisfactionChart', '客户满意度', 70, 100);
+            updateKPIAndChart('trafficKPI', 'trafficChart', '网站访问量', 1000, 10000);
+            updateKPIAndChart('conversionKPI', 'conversionChart', '转化率', 1, 10);
+        }
+
+        // 初始加载
+        refreshData();
+    </script>
+</body>
+</html>
