@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Countdown Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #3498db, #8e44ad);
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        #countdown {
+            font-size: 3rem;
+            color: #e74c3c;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        button {
+            font-size: 1.2em;
+            border: none;
+            padding: 0.5em 1em;
+            background-color: #9b51e0;
+            border-radius: 0.4em;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #8e44ad;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .circular-progress {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 1rem auto;
+        }
+        .circular-progress::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+        <div class="circular-progress">
+            <div id="countdown">05:00</div>
+        </div>
+        <div class="controls">
+            <button id="startBtn">开始</button>
+            <button id="pauseBtn">暂停</button>
+            <button id="resetBtn">重置</button>
+        </div>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const countdownDisplay = document.getElementById('countdown');
+        const circularProgress = document.querySelector('.circular-progress');
+
+        let countdown;
+        let timeLeft = 5 * 60; // 5 minutes in seconds
+        let isPaused = false;
+        const totalTime = timeLeft;
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            countdownDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const progress = (1 - timeLeft / totalTime) * 360;
+            circularProgress.style.background = `conic-gradient(#9b51e0 ${progress}deg, #e0e0e0 0deg)`;
+        }
+
+        function startTimer() {
+            if (!countdown && !isPaused) {
+                countdown = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        stopTimer();
+                        countdownDisplay.textContent = "Time's up!";
+                    }
+                }, 1000);
+                startBtn.textContent = '停止';
+                pauseBtn.disabled = false;
+            } else if (isPaused) {
+                isPaused = false;
+                startBtn.textContent = '停止';
+                pauseBtn.textContent = '暂停';
+            } else {
+                stopTimer();
+            }
+        }
+
+        function pauseTimer() {
+            if (!isPaused) {
+                clearInterval(countdown);
+                countdown = null;
+                isPaused = true;
+                pauseBtn.textContent = '恢复';
+                startBtn.textContent = '开始';
+            } else {
+                startTimer();
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(countdown);
+            countdown = null;
+            isPaused = false;
+            startBtn.textContent = '开始';
+            pauseBtn.textContent = '暂停';
+            pauseBtn.disabled = true;
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timeLeft = totalTime;
+            updateDisplay();
+        }
+
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // Initialize display
+        updateDisplay();
+        pauseBtn.disabled = true;
+    </script>
+</body>
+</html>
