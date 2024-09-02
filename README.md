@@ -1,16 +1,18 @@
 # 25 JavaScript Projects: Prepare for Your 2024 Interview
-
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Countdown%20timer.png)
 In the competitive field of programming, having solid JavaScript skills is a key step towards success. To help you better prepare for the upcoming interview, we have carefully prepared 25 practical JavaScript project examples. These projects not only cover common needs in front-end development, but also help you deeply understand the core concepts of JavaScript and improve your practical ability.
 
 ## Project Overview
-
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/To-do%20List.png)
 The following is a list of 25 JavaScript projects we have prepared for you. Each project comes with HTML, CSS, and JavaScript files for you to download, learn, and modify.
 
 ### 1. Accordion Effect (Accordion)
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/notes-app.png)
 - **Purpose**: Implement a collapsible accordion effect, which is often used in FAQ pages or scenarios where you need to save space to display content.
 - **Files**: [index.html]([https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024/1.accordion/index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
 ### 2. Random Color Generator
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/pagination.png)
 - **Purpose**: Generate and display random colors, which can be used in design tools or any scene that requires random colors.
 - **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
@@ -19,19 +21,26 @@ The following is a list of 25 JavaScript projects we have prepared for you. Each
 - **Files**: [index.html](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024), [main.js](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024, [style.css](https://sites.google.com/view/z2pw/notebook/learn1/25-javascript-projects-for-interview-2024)
 
 ... (Detailed description of other projects is omitted here, the following is a list of projects)
-
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/recipe-app.png)
 ### 4. API call examples
 ### 5. Image carousel
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/sticky-navbar.png)
 ### 6. Load more button
 ### 7. Light and dark mode switch
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/tip-calculator.png)
 ### 8. Random Quote Generator
 ### 9. Tab Switcher
 ![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Accordion%20with%20Modal.png)
 ### 10. Modal
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Tic%20Tac%20Toe%20with%20AI.png)
 ### 11. Tic-Tac-Toe
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Filter%20Cards%20By%20Category.png)
 ### 12. Filter Cards
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/QR%20Code%20Generator.png)
 ### 13. QR Code Generator
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/button-ripple-effect.png)
 ### 14. Scroll to Top/Bottom Buttons
+![Coverage Status](https://github.com/543x/1000-javascript-projects-for-interview/blob/main/image/Scroll%20to%20Top%20and%20Bottom.png)
 ### 15. Button Ripple Effect
 ### 16. Multi-step Progress Bar
 ### 17. Scroll Indicator
